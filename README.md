@@ -1,6 +1,6 @@
 # Grid Stop Trading V1 (Bản có Panel)
 
-EA lưới chỉ dùng lệnh **Buy Stop** và **Sell Stop** trên MetaTrader 5. Buy Stop đặt trên đường gốc, Sell Stop đặt dưới đường gốc. Hỗ trợ gồng lãi, cân bằng lệnh, giờ hoạt động và dừng theo tích lũy. **Bản có Panel** hiển thị thông tin trực tiếp trên chart.
+EA lưới chỉ dùng lệnh **Buy Stop** và **Sell Stop** trên MetaTrader 5. Buy Stop đặt trên đường gốc, Sell Stop đặt dưới đường gốc. Hỗ trợ gồng lãi, cân bằng lệnh, giờ hoạt động, dừng theo tích lũy và **Dừng/Reset EA theo SL (% lỗ so với vốn)**. **Bản có Panel** hiển thị thông tin trực tiếp trên chart.
 
 ---
 
@@ -103,6 +103,22 @@ Nếu đang có lệnh mở mà hết giờ → EA vẫn quản lý cho đến k
 
 ---
 
+## Dừng/Reset EA theo SL (% lỗ so với vốn)
+
+Khi **Equity** âm X% so với vốn đầu phiên (initialEquity) → dừng hoặc reset EA để hạn chế thua lỗ.
+
+| Input | Mô tả |
+|-------|------|
+| Bật | Bật/tắt chức năng |
+| % lỗ | Ví dụ 10 = khi Equity ≤ vốn đầu phiên × (1 − 10%) thì kích hoạt |
+| Hành động | **Dừng EA**: đóng hết lệnh, EA dừng hoàn toàn. **Reset EA**: đóng hết lệnh, đặt đường gốc mới, tiếp tục giao dịch |
+
+**Ví dụ:** Vốn đầu phiên = 10,000 USD, % lỗ = 10% → kích hoạt khi Equity ≤ 9,000 USD.
+
+Khi bật **Bật thông báo về điện thoại khi EA reset**, SL % kích hoạt sẽ gửi push notification tương tự các chức năng reset khác (Chức năng: "SL % lỗ - Dừng EA" hoặc "SL % lỗ - Reset EA").
+
+---
+
 ## Cài đặt chung
 
 | Input | Mô tả |
@@ -143,7 +159,7 @@ Lỗ lớn nhất: -120.50 / 30000.00 (0.40%)
 Lot: 0.16 / 1.28
 ```
 
-**Chức năng** có thể là: `Cân bằng lệnh`, `Trading Stop, Step Tổng`, `Thủ công`, v.v.
+**Chức năng** có thể là: `Cân bằng lệnh`, `Trading Stop, Step Tổng`, `SL % lỗ - Dừng EA`, `SL % lỗ - Reset EA`, `Thủ công`, v.v.
 
 ---
 
@@ -164,11 +180,13 @@ Lot: 0.16 / 1.28
 3. Gắn EA lên chart.
 4. Input **Hiển thị panel** = true để xem thông tin trên chart.
 
+Bản có Panel có đầy đủ chức năng: Stop A/B, gồng lãi, cân bằng lệnh, **Dừng/Reset EA theo SL (% lỗ)**, giờ hoạt động, dừng theo tích lũy, thông báo điện thoại.
+
 ### Bản NoPanel (nhẹ, không panel)
 
 - File: `GridStopTradingV1_NoPanel.mq5`
 - Không có panel hiển thị trên chart → EA nhẹ, chạy mượt hơn.
-- Chức năng giống bản có Panel (Stop A/B, gồng lãi, cân bằng lệnh, v.v.).
+- Chức năng giống bản có Panel (Stop A/B, gồng lãi, cân bằng lệnh, **SL % lỗ**, giờ hoạt động, v.v.).
 
 ---
 
