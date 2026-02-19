@@ -1,6 +1,6 @@
-# Grid Stop Trading V1
+# Grid Stop Trading V1 (Bản có Panel)
 
-EA lưới chỉ dùng lệnh **Buy Stop** và **Sell Stop** trên MetaTrader 5. Buy Stop đặt trên đường gốc, Sell Stop đặt dưới đường gốc. Hỗ trợ gồng lãi, cân bằng lệnh, giờ hoạt động và dừng theo tích lũy.
+EA lưới chỉ dùng lệnh **Buy Stop** và **Sell Stop** trên MetaTrader 5. Buy Stop đặt trên đường gốc, Sell Stop đặt dưới đường gốc. Hỗ trợ gồng lãi, cân bằng lệnh, giờ hoạt động và dừng theo tích lũy. **Bản có Panel** hiển thị thông tin trực tiếp trên chart.
 
 ---
 
@@ -19,8 +19,9 @@ Mỗi level tối đa 1 Stop A (nếu bật) và 1 Stop B (nếu bật). A và B
 
 | Input | Mô tả |
 |-------|------|
-| Chế độ khoảng cách | **Cố định**: bậc n cách n×x pips. **Cấp số cộng**: bậc 1 = x, bậc 2 cách bậc 1 = 2x... |
-| Khoảng cách lưới (pips) | Khoảng cách cơ sở / bậc 1 |
+| Chế độ khoảng cách | **Cố định** (0): bậc n cách n×x pips. **Cấp số cộng** (1): bậc 1 = x, bậc 2 cách bậc 1 = 2x, bậc 3 cách bậc 2 = 3x... |
+| Khoảng cách lưới cơ sở (pips) | Khoảng cách cơ sở / bậc 1 |
+| Khoảng cách lưới cố định (pips) | Dùng khi Cấp số cộng: bậc 1 = x, bậc 2 cách bậc 1 = 2x, bậc 3 cách bậc 2 = 3x... |
 | Tự động bổ sung lệnh | Bật: khi lệnh đạt TP thì đặt lại lệnh chờ tại level đó |
 | Tối đa lệnh mở để bổ sung | VD: 2 = có 2 lệnh Buy mở thì không bổ sung Buy Stop |
 
@@ -72,26 +73,44 @@ Khi lãi đạt ngưỡng → EA xóa lệnh chờ gần giá, xóa TP, đặt S
 
 ## Chế độ cân bằng lệnh
 
-Ưu tiên trước gồng lãi. Khi đạt điều kiện → đóng hết lệnh + lệnh chờ, chờ điều kiện mới để khởi động lại.
+Ưu tiên trước gồng lãi. Khi **cả hai** điều kiện đều đạt → đóng hết lệnh mở + lệnh chờ → đặt đường gốc mới tại giá hiện tại → tiếp tục đặt lệnh. Lãi phiên = Equity hiện tại − Equity khi bắt đầu phiên (hoặc sau lần reset gần nhất).
 
 | Input | Mô tả |
 |-------|------|
-| Lãi phiên đạt tối thiểu (USD) | Điều kiện 1 |
-| Lot âm phía ngược giá ≥ X | Điều kiện 2: giá trên gốc → lot âm dưới gốc; giá dưới gốc → lot âm trên gốc |
+| Bật | Bật/tắt chế độ cân bằng lệnh |
+| Điều kiện 1: Tổng lot lệnh đang mở ≥ X | Chỉ tính lệnh đang mở (không tính lệnh chờ). Đặt 0 = không kiểm tra điều kiện này |
+| Điều kiện 2: Lãi phiên đạt tối thiểu (USD) | Phiên đang lãi ≥ X USD. Đặt 0 = không kiểm tra điều kiện này |
+
+**Lưu ý:** Cần ít nhất một điều kiện > 0 để chế độ hoạt động. Đặt cả hai = 0 thì chế độ không kích hoạt.
 
 ---
 
 ## Giờ hoạt động
 
-- Bật: EA chỉ chạy trong khoảng giờ cài đặt.
-- Nếu đang có lệnh mở mà hết giờ → EA vẫn quản lý cho đến khi reset và không còn lệnh.
+| Input | Mô tả |
+|-------|------|
+| Bật giờ hoạt động | EA chỉ chạy trong khoảng giờ cài đặt |
+| Giờ/phút bắt đầu, kết thúc | Khoảng thời gian EA được phép đặt lệnh mới |
+
+Nếu đang có lệnh mở mà hết giờ → EA vẫn quản lý cho đến khi reset và không còn lệnh.
 
 ---
 
 ## Dừng EA theo tích lũy lãi
 
 - Tích lũy = Số dư hiện tại − Số dư khi EA khởi động.
-- Khi tích lũy ≥ ngưỡng → EA dừng (đóng hết lệnh, không đặt lệnh mới).
+- Khi tích lũy ≥ ngưỡng → EA dừng (đóng hết lệnh, không đặt lệnh mới). Kiểm tra sau mỗi lần reset (cân bằng lệnh, Trading Stop, v.v.).
+
+---
+
+## Cài đặt chung
+
+| Input | Mô tả |
+|-------|------|
+| Magic Number | Magic của lệnh do EA đặt |
+| Comment | Comment cho lệnh |
+| Bật thông báo khi EA reset | Gửi push notification về điện thoại khi EA reset |
+| Hiển thị panel | Bật/tắt panel thông tin trên chart |
 
 ---
 
@@ -138,9 +157,18 @@ Lot: 0.16 / 1.28
 
 ## Cài đặt
 
+### Bản có Panel (GridStopTradingV1.mq5)
+
 1. Copy file `GridStopTradingV1.mq5` vào thư mục `MQL5/Experts/`.
 2. Biên dịch trong MetaEditor.
 3. Gắn EA lên chart.
+4. Input **Hiển thị panel** = true để xem thông tin trên chart.
+
+### Bản NoPanel (nhẹ, không panel)
+
+- File: `GridStopTradingV1_NoPanel.mq5`
+- Không có panel hiển thị trên chart → EA nhẹ, chạy mượt hơn.
+- Chức năng giống bản có Panel (Stop A/B, gồng lãi, cân bằng lệnh, v.v.).
 
 ---
 
