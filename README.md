@@ -103,17 +103,17 @@ Nếu đang có lệnh mở mà hết giờ → EA vẫn quản lý cho đến k
 
 ---
 
-## Dừng/Reset EA theo SL (% lỗ so với vốn)
+## Dừng/Reset EA theo SL (% lỗ so với vốn lúc EA khởi động)
 
-Khi **Equity** âm X% so với vốn đầu phiên (initialEquity) → dừng hoặc reset EA để hạn chế thua lỗ.
+Khi **Equity** âm X% so với **vốn lúc EA khởi động** → dừng hoặc reset EA. **Vốn lúc EA khởi động** = Equity tại thời điểm EA bật thủ công hoặc EA tự động khởi động lại sau mỗi lần reset (cân bằng lệnh, Trading Stop, v.v.).
 
 | Input | Mô tả |
 |-------|------|
 | Bật | Bật/tắt chức năng |
-| % lỗ | Ví dụ 10 = khi Equity ≤ vốn đầu phiên × (1 − 10%) thì kích hoạt |
+| % lỗ | Ví dụ 10 = khi Equity ≤ vốn khởi động × (1 − 10%) thì kích hoạt |
 | Hành động | **Dừng EA**: đóng hết lệnh, EA dừng hoàn toàn. **Reset EA**: đóng hết lệnh, đặt đường gốc mới, tiếp tục giao dịch |
 
-**Ví dụ:** Vốn đầu phiên = 10,000 USD, % lỗ = 10% → kích hoạt khi Equity ≤ 9,000 USD.
+**Ví dụ:** Vốn lúc EA khởi động = 10,000 USD, % lỗ = 10% → kích hoạt khi Equity ≤ 9,000 USD. Sau mỗi lần reset, vốn khởi động được cập nhật mới.
 
 Khi bật **Bật thông báo về điện thoại khi EA reset**, SL % kích hoạt sẽ gửi push notification tương tự các chức năng reset khác (Chức năng: "SL % lỗ - Dừng EA" hoặc "SL % lỗ - Reset EA").
 
