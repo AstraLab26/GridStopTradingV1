@@ -37,8 +37,27 @@ Mỗi level tối đa 1 Stop A (nếu bật) và 1 Stop B (nếu bật). A và B
 | Chế độ TP | Pips cố định hoặc theo lưới (bậc k → TP tại bậc k+1) |
 | Take Profit (pips) | Khi chế độ = Pips cố định |
 | Bật gấp thếp | Lot tăng theo mức lưới |
+| Bắt đầu gấp thếp tại bậc lưới | Bậc đó trở lên mới nhân/cộng lot; bậc dưới = lot cơ sở. VD 5 = bậc 1-4 lot cơ sở, bậc 5 = 1 bước gấp thếp |
 | Chế độ gấp thếp | Cấp số nhân (x2, x4...) hoặc cấp số cộng (+0.01 mỗi bậc) |
 | Giới hạn lot | Lot tối đa mỗi lệnh (0 = không giới hạn) |
+
+**Ví dụ – Bắt đầu gấp thếp tại bậc 5**, lot cơ sở 0.01, cấp số nhân x2:
+
+| Bậc lưới | Lot | Giải thích |
+|----------|-----|------------|
+| 1, 2, 3, 4 | 0.01 | Dưới bậc 5 → lot cơ sở |
+| 5 | 0.02 | Bậc bắt đầu gấp thếp = 1 bước nhân lot → 0.01 × 2 |
+| 6 | 0.04 | 2 bước → 0.01 × 2² |
+| 7 | 0.08 | 3 bước → 0.01 × 2³ |
+| 8 | 0.16 | 4 bước → 0.01 × 2⁴ |
+
+**Mặc định = 1** (từ bậc 1 đã gấp thếp, lot cơ sở 0.01, x2):
+
+| Bậc lưới | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|----------|---|---|---|---|---|---|---|---|
+| Lot | 0.01 | 0.02 | 0.04 | 0.08 | 0.16 | 0.32 | 0.64 | 1.28 |
+
+- Bậc 1 = 0 bước (lot cơ sở 0.01), bậc 2 = 1 bước (0.02), bậc 3 = 2 bước (0.04)...
 
 ---
 
