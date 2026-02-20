@@ -1,6 +1,6 @@
 # Grid Stop Trading V1 (Bản có Panel)
 
-EA lưới chỉ dùng lệnh **Buy Stop** và **Sell Stop** trên MetaTrader 5. Buy Stop đặt trên đường gốc, Sell Stop đặt dưới đường gốc. Hỗ trợ gồng lãi, cân bằng lệnh, giờ hoạt động, dừng theo tích lũy và **Dừng/Reset EA theo SL (% lỗ so với vốn)**. **Bản có Panel** hiển thị thông tin trực tiếp trên chart.
+EA lưới chỉ dùng lệnh **Buy Stop** và **Sell Stop** trên MetaTrader 5. Buy Stop đặt trên đường gốc, Sell Stop đặt dưới đường gốc. Hỗ trợ gồng lãi, cân bằng lệnh, giờ hoạt động, dừng theo tích lũy, **Dừng/Reset EA theo SL (% lỗ)** và **Dừng/Reset EA theo SL (âm USD)**. **Bản có Panel** hiển thị thông tin trực tiếp trên chart.
 
 ---
 
@@ -134,7 +134,23 @@ Khi **Equity** âm X% so với **vốn lúc EA khởi động** → dừng hoặ
 
 **Ví dụ:** Vốn lúc EA khởi động = 10,000 USD, % lỗ = 10% → kích hoạt khi Equity ≤ 9,000 USD. Sau mỗi lần reset, vốn khởi động được cập nhật mới.
 
-Khi bật **Bật thông báo về điện thoại khi EA reset**, SL % kích hoạt sẽ gửi push notification tương tự các chức năng reset khác (Chức năng: "SL % lỗ - Dừng EA" hoặc "SL % lỗ - Reset EA").
+Khi bật **Bật thông báo về điện thoại khi EA reset**, SL % kích hoạt sẽ gửi push notification (Chức năng: "SL % lỗ - Dừng EA" hoặc "SL % lỗ - Reset EA").
+
+---
+
+## Dừng/Reset EA theo SL (âm bao nhiêu USD)
+
+Khi **lỗ phiên** (vốn lúc EA khởi động − Equity) **≥ X USD** → dừng hoặc reset EA. **Vốn lúc EA khởi động** = Equity khi bật EA thủ công hoặc khi EA tự động khởi động lại sau reset (cân bằng lệnh, Trading Stop, SL %...).
+
+| Input | Mô tả |
+|-------|------|
+| Bật | Bật/tắt chức năng |
+| Số âm (USD) | VD 100 = kích hoạt khi lỗ phiên ≥ 100 USD (Equity ≤ vốn khởi động − 100) |
+| Hành động | **Dừng EA**: đóng hết, EA dừng. **Reset EA**: đóng hết, đặt gốc mới, chạy tiếp |
+
+**Ví dụ:** Vốn khởi động = 10,000 USD, SL âm USD = 100 → kích hoạt khi Equity ≤ 9,900 USD (lỗ ≥ 100 USD).
+
+Thông báo điện thoại (khi bật): Chức năng "SL âm USD - Dừng EA" hoặc "SL âm USD - Reset EA".
 
 ---
 
@@ -178,7 +194,7 @@ Lỗ lớn nhất: -120.50 / 30000.00 (0.40%)
 Lot: 0.16 / 1.28
 ```
 
-**Chức năng** có thể là: `Cân bằng lệnh`, `Trading Stop, Step Tổng`, `SL % lỗ - Dừng EA`, `SL % lỗ - Reset EA`, `Thủ công`, v.v.
+**Chức năng** có thể là: `Cân bằng lệnh`, `Trading Stop, Step Tổng`, `SL % lỗ - Dừng/Reset EA`, `SL âm USD - Dừng/Reset EA`, `Thủ công`, v.v.
 
 ---
 
@@ -199,13 +215,13 @@ Lot: 0.16 / 1.28
 3. Gắn EA lên chart.
 4. Input **Hiển thị panel** = true để xem thông tin trên chart.
 
-Bản có Panel có đầy đủ chức năng: Stop A/B, gồng lãi, cân bằng lệnh, **Dừng/Reset EA theo SL (% lỗ)**, giờ hoạt động, dừng theo tích lũy, thông báo điện thoại.
+Bản có Panel có đầy đủ chức năng: Stop A/B, gồng lãi, cân bằng lệnh, **SL % lỗ**, **SL âm USD**, giờ hoạt động, dừng theo tích lũy, thông báo điện thoại.
 
 ### Bản NoPanel (nhẹ, không panel)
 
 - File: `GridStopTradingV1_NoPanel.mq5`
 - Không có panel hiển thị trên chart → EA nhẹ, chạy mượt hơn.
-- Chức năng giống bản có Panel (Stop A/B, gồng lãi, cân bằng lệnh, **SL % lỗ**, giờ hoạt động, v.v.).
+- Chức năng giống bản có Panel (Stop A/B, gồng lãi, cân bằng lệnh, **SL % lỗ**, **SL âm USD**, giờ hoạt động, v.v.).
 
 ---
 
